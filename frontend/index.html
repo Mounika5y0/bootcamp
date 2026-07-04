@@ -9,9 +9,12 @@
 <body>
     <div id="nav">
         <a href="/">Home</a>
-        <a href="https://github.com" target="_blank">GitHub</a>
-        <a href="https://leetcode.com">Leetcode</a>
-        <a href="./pages/bootcamp.html">autosuggest</a>
+        <a href="/" target="_blank">Home</a>
+        <a href="./pages/gitpulse.html" target="_blank">Gitpulse</a>
+        <a href="./pages/leetcode-stats.html" target="_blank">LeetCode</a>
+        <a href="./pages/codeforces-insights.html" target="_blank">Codeforces</a>
+        <a href="./pages/askgemini.html" target="_blank">AskGemini</a>
+        <a href="./pages/bootcamp.html" target="_blank">Bootcamp</a>
 
     </div>
     <div id="home-intro">
@@ -22,13 +25,15 @@
     </div>
     <div id="card">
         <div id="card-img">
-            <img src="./images/jane.png" alt="no image found">
+            <img id="img" src="./images/jane.png" alt="no image found">
         </div>
         <div id="action">
             <h1 id="card-name">Jane Doe</h1>
             <p id="card-gender">Female</p>
-            <button onclick=toggle() id="card-toggle">Toggle</button>
+            <button onclick="toggle()" id="card-toggle">Toggle</button>
+            <button onclick="getRandomUser()" id="card-random-user">Random user</button>
         </div>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>
