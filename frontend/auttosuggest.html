@@ -4,14 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Suggest</title>
+
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .body-container{
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        h1{
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        h1 span{
+            color: #2563eb;
+        }
+
+        p{
+            font-size:16px;
+            color:#555;
+        }
+
+        #search-inp{
+            width:400px;
+            max-width:90%;
+            height:40px;
+            padding:0 12px;
+            font-size:16px;
+            border:1px solid #999;
+            border-radius:5px;
+            outline:none;
+        }
+
+        #suggestion-box{
+            width:400px;
+            max-width:90%;
+            margin:5px auto;
+            border:1px solid #ddd;
+            border-top:none;
+            border-radius:0 0 5px 5px;
+            text-align:left;
+            background:white;
+            box-shadow:0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #suggestion-box div{
+            padding:10px;
+            cursor:pointer;
+        }
+
+        #suggestion-box div:hover{
+            background:#f2f2f2;
+        }
+
+        #p1{
+            font-size:20px;
+            margin:10px;
+        }
+
+        #p2{
+            margin-bottom:20px;
+        }
+    </style>
 </head>
+
 <body>
-    <!-- <h1>Auto Suggest Page</h1> -->
-     <p> &#9881;&bull; online | &#128339; - ms</p>
-     <h1>BeingInfinity</h1>
-     <p>One million phrases. Four Algorithms. Prefix Based Auto Suggest</p>
-     <form>
-        &#128269; <input type="search" id="searchinp" placeholder="Lets dive into...">
-     </form>
+
+    <p id="p1">&#9881;</p>
+    <p id="p2">&bull; online | &#128339; - ms</p>
+
+    <form onsubmit="return false;" style="text-align:center;">
+
+        <h1 style="font-size:80px;">
+            <span style="color:#6200ff;">Mounika</span>
+            <span style="color:rgb(255,49,49);">Punna</span>
+        </h1>
+
+        <p style="font-family:'Playfair Display', serif; font-size:18px;">
+            One million phrases. Four Algorithms. Prefix Based Auto Suggest!
+        </p>
+
+        <input
+            type="search"
+            id="search-inp"
+            placeholder="&#128269; Let's dive into..."
+        >
+
+        <div id="suggestion-box"></div>
+
+    </form>
+
+    <script>
+
+        var searchBox = document.getElementById("search-inp");
+        var suggestionBox = document.getElementById("suggestion-box");
+
+        searchBox.addEventListener("input", function () {
+
+            var userInput = searchBox.value;
+
+            // Clear suggestions if input is empty
+            if (userInput.trim() === "") {
+                suggestionBox.innerHTML = "";
+                return;
+            }
+
+            var url =
+                "https://autosuggest-backend.onrender.com/api/autosuggest?q="
+                + encodeURIComponent(userInput)
+                + "&algorithm=brute&limit=10&weighted=false";
+
+            fetch(url)
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(data){
+
+                    console.log(data);
+
+                    var resultArray = data.results;
+                    var htmlResults = "";
+
+                    for(var i=0;i<resultArray.length;i++){
+                        htmlResults +=
+                        "<div>" + resultArray[i].text + "</div>";
+                    }
+
+                    suggestionBox.innerHTML = htmlResults;
+                })
+                .catch(function(error){
+                    console.log(error);
+                    suggestionBox.innerHTML =
+                        "<div>No suggestions found.</div>";
+                });
+
+        });
+
+    </script>
+
 </body>
 </html>
